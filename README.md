@@ -1,0 +1,9 @@
+- 👋 Hi, I’m @llucasvera
+- 👀 I’m interested in Front-End Developing
+- 🌱 I’m currently learning JavasCript
+- 💞️ I’m looking to collaborate on anything :D
+- 📫 How to reach me
+- lucasverabracamonte@gmail.com
+- (+54) 3521 9 630171
+- instagram.com/llucasvera
+- 😄 Pronouns: He/him
