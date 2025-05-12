@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lucas's Portfolio</title>
+
+  <!-- AOS + GSAP + Particles.js -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      background: rgba(18,18,18,0.95);
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    nav a {
+      color: white;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a.active::after,
+    nav a:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      background: #ff5722;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 40px 60px;
+      text-align: center;
+      position: relative;
+    }
+
+    #hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #121212;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    #hero img {
+      height: 160px;
+      object-fit: cover;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    #hero h1, #hero h3 {
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ffffff;
+    }
+
+    h3 {
+      font-weight: 400;
+      color: #cccccc;
+      max-width: 700px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #ff5722, #ff8a50);
+      color: #ffffff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1em;
+      margin: 10px;
+      transition: 0.3s easei;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 1;
+      display: inline;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      background: linear-gradient(135deg, #ffc107, #ff9800);
+      color: black;
+    }
+
+    .btn:active {
+      background: #e64a19;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      margin: 20px;
+      padding: 30px;
+      color: white;
+      display: inline-block;
+      width: 300px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      background: #1e1e1e;
+      color: white;
+      border: 1px solid #444;
+      border-radius: 5px;
+      transition: border 0.3s ease;
+    }
+
+    form input:focus,
+    form textarea:focus {
+      border: 1px solid #ff5722;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 30px;
+      background: #ff5722;
+      border: none;
+      color: black;
+      font-size: 1.1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #ffc107;
+    }
+
+    .social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 50px;
+  flex-wrap: wrap;
+}
+
+.social-buttons a img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.social-buttons a:hover img {
+  transform: scale(1.2);
+  filter: drop-shadow(0 0 5px #ff5722);
+}
+
+.gith{
+    filter: invert(1);
+}
+
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.skill-card {
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 25px 20px;
+  width: 140px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.skill-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 25px rgba(255, 87, 34, 0.3);
+}
+
+.skill-card img {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.skill-card p {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1em;
+  margin-top: 5px;
+}
+
+
+.project-card {
+  background: #1e1e1e;
+  border-radius: 15px;
+  overflow: hidden;
+  width: 320px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(255, 87, 34, 0.4);
+  transition: 0.3s;
+}
+
+.project-image {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+}
+
+.project-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.project-content h3 {
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  color: #ff8a50;
+}
+
+.project-content p {
+  font-size: 0.95em;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.project-buttons a {
+  display: inline-block;
+  background: #ff5722;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-right: 10px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.project-buttons a:hover {
+  background: #ffc107;
+  color: black;
+  transform: scale(1.05);
+}
+
+
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <a href="#hero">Inicio</a>
+    <a href="#about">Sobre mí</a>
+    <a href="#skills">Habilidades</a>
+    <a href="#projects">Proyectos</a>
+    <a href="#contact">Contacto</a>
+  </nav>
+
+  <section id="hero">
+    <div id="particles-js"></div>
+    <img src="images/hero1.png" alt="Foto del desarrollador" />
+    <h1>Hola! Soy Lucas.</h1>
+    <h3>Desarrollador Web <br> Convirtiendo ideas en experiencias digitales increíbles.</h3>
+    <a href="#contact" class="btn">Contáctame</a>
+    <a href="cv.pdf" class="btn" download>Descargar CV</a>
+  </section>
+
+  <section id="about" data-aos="fade-up">
+    <h2>Sobre mí</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px;">
+      <div class="card" data-aos="zoom-in" data-aos-delay="200">
+        <h3>🚀 ¿Quién soy?</h3>
+        <p>Soy un desarrollador web apasionado por crear interfaces intuitivas y experiencias únicas que conecten con los usuarios.</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="400">
+        <h3>🛠️ ¿Qué hago?</h3>
+        <p>Transformo ideas en soluciones digitales modernas usando tecnologías como JavaScript, React y Node.js.</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="600">
+        <h3>🎯 Misión</h3>
+        <p>Construir sitios web funcionales, accesibles y con diseño impecable para impulsar proyectos al siguiente nivel.</p>
+      </div>
+    </div>
+  
+    <div style="margin-top: 60px;" data-aos="fade-up" data-aos-delay="800">
+      <p style="max-width: 800px; margin: auto; font-size: 1.1em; line-height: 1.8;">
+        Cuando no estoy programando, me gusta explorar nuevas herramientas de diseño, aprender sobre UX/UI y colaborar en proyectos creativos que generen impacto. 
+        Siempre estoy en busca de desafíos que me hagan crecer profesionalmente.
+      </p>
+    </div>
+  
+    <!-- Redes Sociales -->
+    <div class="social-buttons" data-aos="fade-up" data-aos-delay="1000">
+      <a href="https://www.linkedin.com/in/tuusuario" target="_blank" aria-label="LinkedIn">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+      </a>
+      <a href="https://github.com/tuusuario" target="_blank" aria-label="GitHub" class="gith">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+      </a>
+      <a href="mailto:tuemail@gmail.com" target="_blank" aria-label="Gmail">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Gmail">
+      </a>
+      <a href="https://www.instagram.com/tuusuario" target="_blank" aria-label="Instagram">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+      </a>
+    </div>
+  </section>
+  
+  
+
+  <section id="skills" data-aos="fade-left">
+    <h2>Habilidades</h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-aos="flip-left">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" />
+        <p>HTML5</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="100">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+        <p>CSS3</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="200">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" />
+        <p>JavaScript</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="300">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
+        <p>React</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="400">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" />
+        <p>Node.js</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="500">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" />
+        <p>Diseño UX/UI</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="600">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+        <p>Java</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="700">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" />
+        <p>Git</p>
+      </div>
+      <div class="skill-card" data-aos="flip-left" data-aos-delay="800">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" alt="Firebase" />
+        <p>Firebase</p>
+      </div>
+    </div>
+  </section>
+  
+  
+
+  <section id="projects" data-aos="zoom-in">
+    <h2 style="margin-bottom: 40px;">Proyectos</h2>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;">
+      
+      <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="project-image" style="background-image: url('/images/studio-barber-12.png');"></div>
+        <div class="project-content">
+          <h3>Gestor de Turnos</h3>
+          <p>Aplicación para agendar turnos online con integración a WhatsApp y panel administrativo.</p>
+          <div class="project-buttons">
+            <a href="https://demo-link1.com" target="_blank">Ver Demo</a>
+            <a href="https://github.com/usuario/proyecto1" target="_blank">Código</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="project-image" style="background-image: url('/images/My\ portfolio.png');"></div>
+        <div class="project-content">
+          <h3>Landing Page Freelancer</h3>
+          <p>Diseño moderno para presentación profesional, ideal para captar clientes freelance.</p>
+          <div class="project-buttons">
+            <a href="https://demo-link2.com" target="_blank">Ver Demo</a>
+            <a href="https://github.com/usuario/proyecto2" target="_blank">Código</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="project-image" style="background-image: url('/images/Memento.png');"></div>
+        <div class="project-content">
+          <h3>App de Tareas</h3>
+          <p>CRUD completo con JavaScript y Firebase para gestionar tareas personales.</p>
+          <div class="project-buttons">
+            <a href="https://demo-link3.com" target="_blank">Ver Demo</a>
+            <a href="https://github.com/usuario/proyecto3" target="_blank">Código</a>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  
+
+  <section id="contact" data-aos="fade-up">
+    <h2>Contacto</h2>
+    <form>
+      <input type="text" placeholder="Tu nombre" required />
+      <input type="email" placeholder="Tu correo" required />
+      <textarea placeholder="Tu mensaje..." rows="5" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 60 },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.2 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 120,
+          color: "#ffffff",
+          opacity: 0.1,
+          width: 1
+        },
+        move: { enable: true, speed: 0.7 }
+      }
+    });
+
+    // ScrollSpy básico
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("nav a");
+    window.onscroll = () => {
+      let current = "";
+      sections.forEach(sec => {
+        const top = window.scrollY;
+        const offset = sec.offsetTop - 150;
+        const height = sec.offsetHeight;
+        if (top >= offset && top < offset + height) current = sec.getAttribute("id");
+      });
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+          link.classList.add("active");
+        }
+      });
+    };
+
+    // Animaciones GSAP para el hero
+    gsap.from("#hero img", { duration: 1, opacity: 0, y: -50 });
+    gsap.from("#hero h1", { duration: 1, opacity: 0, x: -50, delay: 0.5 });
+    gsap.from("#hero h3", { duration: 1, opacity: 0, x: 50, delay: 0.8 });
+    gsap.from("#hero .btn", { duration: 0.6, opacity: 0, y: 20, delay: 1.2, stagger: 0.2 });
+  </script>
+</body>
+</html>
